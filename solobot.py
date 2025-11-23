@@ -1,8 +1,16 @@
 from solodef import *
 
 
-token = '6645820877:AAFB92hBesoBMreLjVhQJhbfArh9NG46K9k'
+token = get_cfg()['Токен бота']
+bot = telebot.TeleBot(token)
 print('Бот запущен')
 
-bot = telebot.TeleBot(token)
 
+@bot.message_handler(content_types=['text'])
+def message_handler(message):
+    bot.send_message(message.chat.id, get_cfg()['Ключ API CRM системы'])
+
+
+
+bot.delete_webhook()
+bot.polling(none_stop=True, timeout=60)
