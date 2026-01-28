@@ -1,5 +1,20 @@
 import telebot
 import json
+import os
+import sqlite3
+import logging
+import requests
+
+
+DB_FILE = 'solobase.db'
+def check_db():
+    if not os.path.exists(DB_FILE):
+        conn = sqlite3.connect(DB_FILE)
+        conn.close()
+        return False
+    return True
+
+
 
 def get_cfg():
     with open('bot.cfg', 'r', encoding='utf-8') as f:
