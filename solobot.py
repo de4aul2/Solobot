@@ -8,13 +8,10 @@ print('Бот запущен')
 
 @bot.message_handler(content_types=['text'])
 def message_handler(message):
-    user_list = get_user_list()
-    for i in user_list:
-        markup = types.InlineKeyboardMarkup()
-        btn1 = types.InlineKeyboardButton('Пропустить', callback_data=f'Пропустить_{i[2]}')
-        btn2 = types.InlineKeyboardButton('Заменить номер', callback_data=f'Заменить номер_{i[2]}')
-        markup.row(btn1, btn2)
-        bot.send_message(message.from_user.id, f'Имя: {i[0]}, номер: {i[1]}', reply_markup=markup)
+    if check_db():
+        bot.send_message(message.chat.id, "Файл базы данных существует.")
+    else:
+        bot.send_message(message.chat.id, "Файл БД не существует.\nФайл базы данных создан.")
 
 
 @bot.callback_query_handler(func=lambda callback: True)
